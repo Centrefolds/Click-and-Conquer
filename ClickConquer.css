@@ -1,0 +1,452 @@
+.img {
+    position: relative;
+	display: inline-block;
+	width: 90%;
+    max-width: 650px;
+	margin-left: auto;
+    margin-right: auto;
+    height: auto;
+	border-radius: 5px;
+	opacity: 0.5;
+}
+
+.img-active {
+    display: inline;
+	position: relative;
+	margin: auto;
+    height: 18px;
+	cursor: pointer;
+}
+.img-Planet {
+    width: 20px;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.PlanetText{
+	top: 10px; vertical-align: top; position: relative; display:inline-block; height:110px; width:30%; min-width:150px;
+}
+.PlanetTextVertical{
+vertical-align: top; top:40px; position: absolute; display:inline-block; padding-left:2%; left: 0; width:5%; min-width:30px;
+}
+.headerButton{
+	 height: 100%; text-align: center; line-height:30px; display: inline-block; min-width: 50px; padding-left: 10px; padding-right: 10px;  list-style:none;
+}
+.K{
+	cursor:pointer;
+}
+.K:hover{
+	background-color: rgba(30,15,30,0.3);
+}
+
+/*General page features*/
+
+body {
+  font-size: 14px;
+  font-family: Arial;
+  color: #333333;
+  background-color: #fff;
+}
+
+p{
+	margin:0;
+}
+
+#gamePage {
+    position: fixed;
+    width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#topBar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 30px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+	background-color: rgba(30,15,30,0.1);
+}
+
+#stratPagetotal{
+	position: fixed; left:4%; width: 92%; min-width: 1050px; height: 65%;border: 1px solid gray; border-radius: 10px; box-shadow: 2px 2px 7px #555;
+}
+
+.planetDisclaimer{
+	position: relative; margin:2%; width: 96%; min-width: 700px; height: 130px; border-radius: 10px; box-shadow: 1px 1px 5px #555; cursor:pointer; text-align: center;
+}
+
+.ImagePlanetGalaxy{
+	position: absolute; right: 0; margin: 11px; display:inline-block; height:107px; border-radius: 10px; width:190px; text-align: center;
+}
+
+.bubble { 
+  position: absolute; 
+  left: 0px; 
+  top:43px; 
+  width: 190px; 
+  height: 20px; 
+  display: table; 
+}
+
+.bubble p {
+  display: table-cell; 
+  vertical-align: middle; 
+  text-align: center; 
+}	
+
+.winBar {
+    display: none;
+	position: relative;
+    height: 40px;
+    width: 100%;
+	text-align: center;
+	top: 1px;
+	line-height:40px; 
+	background-color: #32CD32;
+	
+    border-bottom: 1px solid gray;
+	font-size: 20;
+}
+
+#game {
+    position: fixed;
+    bottom: 0;
+    top: 30px;
+	left:0;
+    width: 100%;
+  	background:rgba(0,0,0,0);
+    height: auto;
+    white-space: nowrap;
+}
+
+.column {
+    height: 100%;
+    display: inline-block;
+	overflow-y: auto;
+    overflow-x: hidden;
+}
+#column1 {
+    width: 20%;
+    max-width: 400px;
+    min-width: 250px;
+    padding-top: 20px;
+    padding-right: 0px;
+	padding-left: 0px;
+}
+#column2 {
+    max-width: 400px;
+    width: 18%;
+    min-width: 250px;
+	padding-left: 0px;
+    padding-top: 20px;
+	padding-right: 0px;
+}
+#column3 {
+    width: 20%;
+    max-width: 400px;
+    min-width: 250px;
+	padding-left: 0px;
+    padding-top: 20px;
+	padding-right: 0px;
+}
+#column4 {
+	width: 40%;
+	min-width: 650 px;
+	padding-left: 0px;
+    padding-top: 20px;
+	padding-right: 0px;
+}
+
+h3 {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+table {
+    font-size: 12px;
+}
+
+/* Containers */
+
+.container {
+    border-radius: 5px;
+	padding: 3%;
+    background: rgba(30,15,30,0.1);
+    margin: 2%;
+	width: 100%;
+}
+.containerButtons {
+    border-radius: 0px;
+    padding-right: 2%;
+	padding-left: 2%;
+	margin: auto;
+}
+.containerImage {
+    position: relative;
+	text-align: center;
+}
+.containerActive {
+    display: inline;
+	float: right;
+	margin-right:10%;
+}
+.containerImage .caption {
+    position: absolute;
+    text-align: center;
+	width: 100%;
+	top: 20%;	
+}
+.chartPannel{
+	position: relative; display:inline-block; margin-left:4%; margin-right:4%; width: 40%; margin-top:1%;
+}
+
+	
+
+/* Infoboxes & buttons */
+
+.InfoBox{
+	text-align: left;
+	display: none;
+    position:absolute;
+	z-index: 10;	
+	margin-left: 5px;
+	margin-top: 8%;
+    color:#ffffff; 
+    background:#262626; 
+    padding:10px; 
+    border-radius:5px; 
+}
+.ActionButton {
+	border-left: 6px solid LimeGreen;
+    background-color: rgba(30,15,30,0.2);
+	cursor: pointer;
+}
+.ActionButton:hover {
+	background-color: rgba(30,15,30,0.3);
+}
+.ActionButtonDisabled {
+	color:rgba(30,15,30,0.5);
+	background-color: rgba(30,15,30,0.1);
+	border-left: 0px;
+}
+
+.ActionButtonDisabled .percentage {
+	height: 1.4em;
+	background: rgba(30,15,30,0.3);
+	border-radius: 5px;
+	position: relative;
+	margin-top:-1.3em;
+	margin-left: 0.1em;
+}
+
+.TT{
+	position: relative;
+	border-radius: 5px;
+	border-bottom: 0px;
+	border-right: 0px;
+    margin-top: 0.5em;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+	text-align: center;
+    font-size: 12px;
+}
+
+.TT1{
+	position: relative;
+	width: 50px;
+	margin-left: -25px;
+	margin-top:-17px;
+	height: 16px;
+}
+.TT3{
+	position: relative;
+	margin-left: -25px;
+	margin-top:-17px;
+	height: 17px;
+	left:40%; width:100px; text-transform: none; font-weight: normal; font-size:11;
+}
+.TT1:hover .Infobox{
+	display: block;	
+	margin-left: -100px;
+	margin-top: 100%;
+	width:150px;
+}
+.TT3:hover .Infobox{
+	display: block;	
+	margin-left: -30%;
+	margin-top: 30%;
+	width:auto;
+}
+.planetDisclaimer:hover .Infobox{
+	display: block;
+}
+.TT:hover .InfoBox{
+	display: block;
+}
+.img:hover .InfoBox{
+	display: block;
+}
+.AddButton{
+	text-align: center;
+    font-size: 12px;
+	cursor: pointer;
+}
+.Plus:hover  {
+	color: #32CD32;
+	font-weight: bold;
+}
+.Less:hover  {
+	color: #FF0000;
+	font-weight: bold;
+}
+.RecruitButton{
+	color:solid black;
+}
+.RecruitButtonDisabled{
+	color:#ccc;
+}
+
+/* Colors */
+
+.blue{ color: #00BFFF;}
+.green{ color: #32CD32; }
+.purple{ color: #9400D3; }
+.orange{ color: #FF8C00; }
+.white{ color: #FFFFFF; }
+.grey{ color: #C0C0C0; }
+.red{ color: #FF0000; }
+.black{ color: #000000; }
+.textPlanet{ color:rgba(30,15,30,0.7); font-weight:bold;}
+
+.shadow{ 
+	color: #FFFFFF;
+	text-shadow: 1px 1px 1px black; 
+}
+
+.tablePlanet{
+	position: relative;
+	width: 40%;
+	left: 30%;
+	text-align: center;
+}
+.closeButton{
+	position: absolute; top: 10px; right: 10px; margin:0;  cursor: pointer;
+}
+.closeButton:hover{
+	text-decoration: underline;
+	color: red;
+}
+.AA{
+	cursor: pointer;
+	
+}
+.AA:hover{
+	text-decoration: underline;
+	color: red;
+}
+
+::selection { background: transparent; color:inherit; }
+::-moz-selection { background: transparent; color:inherit; }
+
+
+/* MENU DEROULANT GRAPHES */
+
+#menu, #menu ul{
+padding:0;
+margin:0;
+list-style:none;
+text-align:center;
+font-size: 12px;
+}
+#menu li{
+display:inline-block;
+position:relative;
+border-radius:5px 5px 0 0;
+width: 20%;
+background-color: rgba(30,15,30,0.1);
+cursor: pointer;
+padding: 0.5em;
+}
+#menu ul li{
+display:inherit;
+width: inherit;
+border-radius:0;
+}
+#menu ul li:hover{
+border-radius:0;
+}
+#menu ul li:first-child{
+margin-top:6px;
+}
+#menu ul li:last-child{
+border-radius:0 0 5px 5px;
+}
+#menu ul{
+position:absolute;
+z-index: 1000;
+max-height:0;
+left: 0;
+right: 0;
+overflow:hidden;
+cursor: pointer;
+-moz-transition: .3s all .1s;
+-webkit-transition: .3s all .1s;
+transition: .3s all .1s;
+}
+#menu li:hover ul{
+max-height:50em;
+}
+#menu li li{
+background-color: rgba(30,15,30,0.1);
+}
+#menu li:hover, #menu li li:hover{
+background-color: rgba(30,15,30,0.3);
+}
+#menu span{
+display:block;
+color:#000;
+}
+#menu ul span{
+padding:0.3em;
+}
+
+#impexp{
+	display:none;
+	position:absolute;
+	top:30px;
+	right:0;
+	width:40%;
+	border:1px solid grey;
+	border-right: 0;
+	background-color:#e9e7e9;
+	z-index:1;
+	border-bottom-left-radius:10px;
+}
+#impexpField{
+	display:block;
+	width:90%;
+	height:10em;
+	margin:1em auto;
+	border-radius:10px;
+}
+.saveButton{
+	width:7em;
+	margin:1em;
+	margin-top:0;
+	background-color:rgba(30,15,30,0.15);
+	border-radius:5px;
+	border:0;
+	cursor: pointer;
+}
+.saveButton:hover{
+	background-color:rgba(30,15,30,0.25);
+}
+
+

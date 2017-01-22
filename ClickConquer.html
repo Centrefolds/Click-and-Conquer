@@ -1,0 +1,2548 @@
+<html>
+	<head>
+		
+		<title id="TITLE"> Click & Conquer (pause) </title>
+		
+		<link rel="shortcut icon" href="ico.ico" />
+		<link rel="stylesheet" type="text/css" href="ClickConquer.css" />
+		<link rel="stylesheet" type="text/css" href="Sweetalert/sweetalert2.min.css">
+		
+		<meta charset="utf-8">
+		
+		<script src="Graphs/Chart.bundle.js"></script>
+		<script src="Graphs/samples/utils.js"></script>
+		<script src="Sweetalert/sweetalert2.min.js"></script>
+
+	</head>
+	
+	<body>
+		<script type="text/javascript" src="ClickConquer.js"></script>
+
+
+		<!-- Top-bar - Version, Save & Links -->
+		<div id="gamePage">
+			<div id="topBar">
+				<div id="gameName" class="headerButton" style="width: 250px" ><b>Click & Conquer v0.1</b></div>
+				
+				<img id="LeftImage" src="image/left.png" class="img-Planet" onclick="changePlanetMoins()">
+				<div id="changeScreenPlanet"  class="headerButton K" onclick="closeStratPage()"><b>Planet tab</b></div>
+				<img id="RightImage" src="image/right.png" class="img-Planet" onclick="changePlanetPlus()">
+				
+				<div id="changeScreenStrat"  class="headerButton K" onclick="openStratPage()" ><b>Strategic map</b></div>
+				
+				<div id="header" style="position: absolute; top:0; right:0; float:right;">
+					<div id="save" class="headerButton K" onclick="impExp()"><b>Save</b></div>
+					<div id="charts" class="headerButton K" onclick="openChartsWindow()"><b>Charts</b></div>
+					<div class="headerButton K" onclick="openAchievementsWindow()"><b>Achievements</b></div>
+					<div id="links" class="headerButton K"><b>Links</b></div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="game">
+			
+			<!-- Specific win / lost bars -->
+			<div id="winBar" class="winBar">
+				<b> PLANET CONQUERED </b>
+			</div>
+			
+			<div id="lostBar" class="winBar red" style="background:rgba(0,0,0,1);">
+				<b> PLANET LOST	</b>
+			</div>
+			
+			
+			<!-- Main page, separated in 4 columns -->
+			<div id="column1" class="column" style="vertical-align: top;">
+				<div id="B1" class="containerButtons">
+					</br>
+					
+					<img src="image/USD.png" id="moneyButton" class="img" style="width:58px; left:40%; opacity:1; cursor: pointer;" onclick="planets[0].StealMoney(2500);">
+					</br></br></br>
+					
+					<h3 id="Titre1"> Population 
+							<div class="TT3">
+								<div class="InfoBox">
+									<p>Each population increases </p>
+									<p>caps of main resources by 1K</p>
+								</div>
+							</div>
+					</h3>
+					<div class="TT ActionButtonDisabled" id="thiefButton" onclick="planets[0].Hire(0);"> Hire thief
+						
+						<div id="thiefpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Your main source of money </p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="thiefmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="thiefscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="thiefweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="thieffaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="thiefmoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="thiefscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="thiefweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="thieffaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="thieftimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Old school subway pick-pocket</i></p>
+							
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="scientistButton" onclick="planets[0].Hire(1);"> Bribe scientist
+						<div  id="scientistpercentage"  class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Your main source of science</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="scientistmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="scientistmoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="scientistfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="scientisttimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Yeah, science, bitch !</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="soldierButton" onclick="planets[0].Hire(2);"> Bribe soldier
+						<div id="soldierpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases firepower : key to military victory</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="soldiermoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="soldiermoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="soldierfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="soldiertimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>If you want peace prepare for war</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="politicianButton" onclick="planets[0].Hire(3);"> Bribe politician
+						<div id="politicianpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases approval rate : key to political victory</p>
+							<p style="text-align: center;" >Each politician reduces all resources' rates by 1%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="politicianmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="politicianmoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="politicianfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="politiciantimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Under every stone lurks a politician</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="guruButton" onclick="planets[0].Hire(4);"> Recruit guru
+						<div id="gurupercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases followers' rate : key to theological victory</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="gurumoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="guruscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="guruweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="gurufaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="gurumoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="guruscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="guruweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="gurufaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="gurutimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Universal provider of positive quotes</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="lobbistButton" onclick="planets[0].Hire(5);"> Hire lobbyist
+						<div id="lobbistpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Each lobbyist increases all resources' rates by 10%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="lobbistmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="lobbistmoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="lobbistfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="lobbisttimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>World's most expensive prostitutes</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="prophetButton" onclick="planets[0].Hire(6);"> Create prophet
+						<div id="prophetpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Greatly increases your follower's rate - key to theological victory</p>
+							<p style="text-align: center;" >Key to theological victory</p>
+							<p style="text-align: center;" >Also greatly reduces stealth</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="prophetmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="prophetmoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="prophetfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="prophettimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>I am Lord, and everything else is bullshit</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="recruiterButton" onclick="planets[0].Hire(7);"> Train recruiter
+						<div id="recruiterpercentage" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Can train scientists, soldiers, gurus & politicians </p>
+							<p style="text-align: center;" >Training speed : 5000s/recruiter </p>
+							<p style="text-align: center;" >Training is free but does not ignore population cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="recruitermoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+								<tr>
+									<td>Effect (/s) </td>
+									<td id="recruitermoneyGain" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterscienceGain" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterweaponsGain" class="red" style="text-align: center"> 0 </td>
+									<td id="recruiterfaithGain" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="recruitertimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>We're hiring senior staff with low salary expectations</i></p>
+						</div>
+					</div>
+				
+				</div>				
+				<div id="B2" class="containerButtons">
+					</br><h3 id="Titre2" > Upgrades 
+							<div class="TT3">
+								<div class="InfoBox">
+									<p>Each upgrade increases </p>
+									<p>stupidity by 1%</p>
+								</div>
+							</div>
+					</h3>
+					
+					<div class="TT ActionButtonDisabled" id="pickpocketTraining" onclick="planets[0].BuyTechno('pickpocketTraining');"> Pickpocket training
+						<div id="percentagepickpocketTraining" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows hiring thiefs</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostpickpocketTraining" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostpickpocketTraining" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostpickpocketTraining" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostpickpocketTraining" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablepickpocketTraining">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Master's degree : Ninja</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="drugLab" onclick="planets[0].BuyTechno('drugLab');"> Drug laboratory
+						<div id="percentagedrugLab" class="percentage " style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles your money income rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostdrugLab" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostdrugLab" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostdrugLab" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostdrugLab" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordabledrugLab">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Breaking Bad - Planet edition</i></p>
+						</div>
+					</div>
+
+					<div class="TT ActionButtonDisabled" id="armedRobbery" onclick="planets[0].BuyTechno('armedRobbery');"> Armed robbery
+						<div id="percentagearmedRobbery" class="percentage " style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles your money income rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostarmedRobbery" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostarmedRobbery" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostarmedRobbery" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostarmedRobbery" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablearmedRobbery">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Your first real use of weapons</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="mortgageFund" onclick="planets[0].BuyTechno('mortgageFund');"> Banking industry
+						<div id="percentagemortgageFund" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles thief's money income</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmortgageFund" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmortgageFund" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmortgageFund" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmortgageFund" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemortgageFund">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>The most well-dressed thiefs</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="IA" onclick="planets[0].BuyTechno('IA');"> Artificial intelligence
+						<div id="percentageIA" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles scientists' production rate</p>
+							<p style="text-align: center;" >Doubles science cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostIA" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostIA" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostIA" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostIA" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableIA">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Real stupidity beats AI every time</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="automation" onclick="planets[0].BuyTechno('automation');"> Automation
+						<div id="percentageautomation" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles scientists' production rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostautomation" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostautomation" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostautomation" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostautomation" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableautomation">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>[robot beeps provocatively]</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="hoursWeek" onclick="planets[0].BuyTechno('hoursWeek');"> 60 hours per week
+						<div id="percentagehoursWeek" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles scientists' production rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCosthoursWeek" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCosthoursWeek" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCosthoursWeek" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCosthoursWeek" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablehoursWeek">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Who's ready for some unpaid overtime ?</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="underpaidIntern" onclick="planets[0].BuyTechno('underpaidIntern');"> Underpaid intern
+						<div id="percentageunderpaidIntern" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows bribing scientists</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostunderpaidIntern" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostunderpaidIntern" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostunderpaidIntern" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostunderpaidIntern" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableunderpaidIntern">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>What would you do for a line on your resume ?</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="mercenaries" onclick="planets[0].BuyTechno('mercenaries');"> Mercenaries
+						<div id="percentagemercenaries" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows bribing soldiers</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmercenaries" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmercenaries" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmercenaries" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmercenaries" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemercenaries">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Nothing bad can result of money & weapons</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="warChild" onclick="planets[0].BuyTechno('warChild');"> War child
+						<div id="percentagewarChild" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles soldiers' production rate</p>
+							<p style="text-align: center;" >Soldiers' salary divided by 5</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostwarChild" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostwarChild" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostwarChild" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostwarChild" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablewarChild">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Oh, look, a new toy !</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="drones" onclick="planets[0].BuyTechno('drones');"> Drones
+						<div id="percentagedrones" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles soldiers' production rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostdrones" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostdrones" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostdrones" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostdrones" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordabledrones">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Good kill</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="cyberAttack" onclick="planets[0].BuyTechno('cyberAttack');"> Cyber attack
+						<div id="percentagecyberAttack" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles soldiers' production rate</p>
+							<p style="text-align: center;" >Halves soldiers' salary</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostcyberAttack" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostcyberAttack" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostcyberAttack" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostcyberAttack" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablecyberAttack">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Hackerman !</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="createCult" onclick="planets[0].BuyTechno('createCult');"> Create cult
+						<div id="percentagecreateCult"  class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows recruiting gurus</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostcreateCult" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostcreateCult" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostcreateCult" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostcreateCult" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablecreateCult">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Welcome to the internet, I shall be your guide</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="weeklyMeetings" onclick="planets[0].BuyTechno('weeklyMeetings');"> Gather every sunday
+						<div id="percentageweeklyMeetings"  class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Gurus and prophets are twice as efficient</p>
+							<p style="text-align: center;" >Doubles the faith cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostweeklyMeetings" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostweeklyMeetings" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostweeklyMeetings" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostweeklyMeetings" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableweeklyMeetings">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Because there are some questions even Google can't answer</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="area51" onclick="planets[0].BuyTechno('area51');"> Sneak into Area 51
+						<div id="percentagearea51"  class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the population cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostarea51" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostarea51" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostarea51" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostarea51" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablearea51">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Hidden in plain sight</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="pacificIsland" onclick="planets[0].BuyTechno('pacificIsland');"> Buy an island
+						<div id="percentagepacificIsland"  class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the population cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostpacificIsland" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostpacificIsland" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostpacificIsland" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostpacificIsland" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablepacificIsland">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>We'll call it "operation China"</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="darkSideOfTheMoon" onclick="planets[0].BuyTechno('darkSideOfTheMoon');"> Dark side of the Moon
+						<div id="percentagedarkSideOfTheMoon" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the population cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostdarkSideOfTheMoon" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostdarkSideOfTheMoon" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostdarkSideOfTheMoon" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostdarkSideOfTheMoon" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordabledarkSideOfTheMoon">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Special guest : Hitler on a T-rex</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="wallStreet" onclick="planets[0].BuyTechno('wallStreet');"> Wall Street
+						<div id="percentagewallStreet" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the money cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostwallStreet" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostwallStreet" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostwallStreet" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostwallStreet" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablewallStreet">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Greed is good</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="taxHeavens" onclick="planets[0].BuyTechno('taxHeavens');"> Tax haven
+						<div id="percentagetaxHeavens" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the money cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCosttaxHeavens" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCosttaxHeavens" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCosttaxHeavens" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCosttaxHeavens" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordabletaxHeavens">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>A dollar-shaped island</i></p>
+						</div>
+					</div>
+										
+					<div class="TT ActionButtonDisabled" id="internet" onclick="planets[0].BuyTechno('internet');"> Internet
+						<div  id="percentageinternet" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the science cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostinternet" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostinternet" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostinternet" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostinternet" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableinternet">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Kittens doing some science</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="wikipedia" onclick="planets[0].BuyTechno('wikipedia');"> Wikipedia
+						<div  id="percentagewikipedia" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the science cap</p>
+							<p style="text-align: center;" >Scientists' salary divided by 5</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostwikipedia" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostwikipedia" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostwikipedia" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostwikipedia" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablewikipedia">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>"List of lists of lists"</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="badNeighborhood" onclick="planets[0].BuyTechno('badNeighborhood');"> Bad neighborhood
+						<div  id="percentagebadNeighborhood" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the weapons cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostbadNeighborhood" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostbadNeighborhood" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostbadNeighborhood" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostbadNeighborhood" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablebadNeighborhood">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Cops: unwelcomed / Pitbull : strongly advised</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="submarine" onclick="planets[0].BuyTechno('submarine');"> Submarine
+						<div  id="percentagesubmarine" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the weapons cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostsubmarine" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostsubmarine" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostsubmarine" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostsubmarine" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablesubmarine">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>For the Motherland !</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="buildPyramids" onclick="planets[0].BuyTechno('buildPyramids');"> Build Pyramids
+						<div id="percentagebuildPyramids" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the faith cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostbuildPyramids" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostbuildPyramids" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostbuildPyramids" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostbuildPyramids" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablebuildPyramids">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Ra's spaceship is coming</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="knife" onclick="planets[0].BuyTechno('knife');"> Swiss Army knife
+						<div id="percentageknife" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the firepower</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostknife" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostknife" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostknife" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostknife" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableknife">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Wenger 16999 Giant</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="machineGun" onclick="planets[0].BuyTechno('machineGun');"> Machine-gun
+						<div id="percentagemachineGun" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the firepower</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmachineGun" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmachineGun" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmachineGun" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmachineGun" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemachineGun">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>A great gift for your 5yr old daughter</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="ballisticMissile" onclick="planets[0].BuyTechno('ballisticMissile');"> Ballistic missile
+						<div id="percentageballisticMissile" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the firepower</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostballisticMissile" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostballisticMissile" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostballisticMissile" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostballisticMissile" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableballisticMissile">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Kim Jong-un would grow a beard for this</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="nanovirus" onclick="planets[0].BuyTechno('nanovirus');"> Nanovirus
+						<div id="percentagenanovirus" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles the firepower</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostnanovirus" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostnanovirus" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostnanovirus" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostnanovirus" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablenanovirus">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Keep calm and wash hands</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="holligans" onclick="planets[0].BuyTechno('holligans');"> Sport holligans
+						<div id="percentageholligans" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases stupidity by 10%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostholligans" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostholligans" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostholligans" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostholligans" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableholligans">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Wow, fuck that guy</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="facebook" onclick="planets[0].BuyTechno('facebook');"> Facebook
+						<div id="percentagefacebook" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases stupidity by 10%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostfacebook" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostfacebook" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostfacebook" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostfacebook" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablefacebook">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Guys, remember to share this game ;)</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="flatEarthTheory" onclick="planets[0].BuyTechno('flatEarthTheory');"> Science denial
+						<div id="percentageflatEarthTheory" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases stupidity by 15%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostflatEarthTheory" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostflatEarthTheory" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostflatEarthTheory" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostflatEarthTheory" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableflatEarthTheory">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>The Earth is flat and 2017 yrs old</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="candyCrush" onclick="planets[0].BuyTechno('candyCrush');"> Candy Crush Saga
+						<div  id="percentagecandyCrush" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Increases stupidity by 20%</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostcandyCrush" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostcandyCrush" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostcandyCrush" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostcandyCrush" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablecandyCrush">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Sweet ! Delicious !</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="writeHollyBook" onclick="planets[0].BuyTechno('writeHollyBook');"> Write Holly Book
+						<div  id="percentagewriteHollyBook" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles conversion rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostwriteHollyBook" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostwriteHollyBook" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostwriteHollyBook" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostwriteHollyBook" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablewriteHollyBook">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>If you buy ten, one burning bush free!</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="humanSacrifice" onclick="planets[0].BuyTechno('humanSacrifice');"> Human sacrifice
+						<div id="percentagehumanSacrifice" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles conversion rate</p>
+							<p style="text-align: center;" >Kills a random staff people</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCosthumanSacrifice" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCosthumanSacrifice" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCosthumanSacrifice" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCosthumanSacrifice" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablehumanSacrifice">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>For the Greater Good</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="wololo" onclick="planets[0].BuyTechno('wololo');"> Wololo
+						<div id="percentagewololo" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles conversion rate</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostwololo" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostwololo" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostwololo" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostwololo" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablewololo">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Blue priest vs Red priest</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="inquisition" onclick="planets[0].BuyTechno('inquisition');"> Inquisition
+						<div id="percentageinquisition" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles conversion rate</p>
+							<p style="text-align: center;" >Kills 20% of the planet population</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostinquisition" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostinquisition" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostinquisition" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostinquisition" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableinquisition">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Nobody expects the spanish inquisition</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="microphone" onclick="planets[0].BuyTechno('microphone');"> Microphone
+						<div id="percentagemicrophone" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles population approval</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmicrophone" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmicrophone" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmicrophone" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmicrophone" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemicrophone">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Spreading ideas ? Nah, let's do a mic drop</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="politicalParty" onclick="planets[0].BuyTechno('politicalParty');"> Create political party
+						<div id="percentagepoliticalParty" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows bribing politicians</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostpoliticalParty" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostpoliticalParty" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostpoliticalParty" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostpoliticalParty" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablepoliticalParty">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Yes we could</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="massMedia" onclick="planets[0].BuyTechno('massMedia');"> Mass media
+						<div id="percentagemassMedia" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles political approval</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmassMedia" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmassMedia" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmassMedia" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmassMedia" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemassMedia">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>The "truth" is whatever people will believe</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="makeAmerica" onclick="planets[0].BuyTechno('makeAmerica');"> Make America Great Again
+						<div id="percentagemakeAmerica" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Doubles political approval</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostmakeAmerica" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostmakeAmerica" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostmakeAmerica" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostmakeAmerica" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablemakeAmerica">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>"I am very rich" @realDonaldTrump</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="blackmail" onclick="planets[0].BuyTechno('blackmail');"> Blackmail
+						<div  id="percentageblackmail" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >+50% to all resources cap</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostblackmail" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostblackmail" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostblackmail" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostblackmail" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableblackmail">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>"Shut up and dance"</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="HRManagement" onclick="planets[0].BuyTechno('HRManagement');"> Human Resources
+						<div  id="percentageHRManagement" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows training recruiters</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostHRManagement" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostHRManagement" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostHRManagement" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostHRManagement" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableHRManagement">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>"Follow your dreams" - Ha Ha Ha - NO.</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="oilIndustry" onclick="planets[0].BuyTechno('oilIndustry');"> Oil Industry
+						<div  id="percentageoilIndustry" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows hiring lobbyists</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostoilIndustry" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostoilIndustry" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostoilIndustry" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostoilIndustry" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordableoilIndustry">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>How is your 401K doing ?</i></p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButtonDisabled" id="fuckImOuttaHere" onclick="planets[0].BuyTechno('fuckImOuttaHere');"> NASA
+						<div  id="percentagefuckImOuttaHere" class="percentage" style="width:50%;"></div><div class="InfoBox">
+							<p style="text-align: center;" >Allows building spaceship</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="moneyCostfuckImOuttaHere" class="red" style="text-align: center"> 0 </td>
+									<td id="scienceCostfuckImOuttaHere" class="red" style="text-align: center"> 0 </td>
+									<td id="weaponsCostfuckImOuttaHere" class="red" style="text-align: center"> 0 </td>
+									<td id="faithCostfuckImOuttaHere" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="timeTillAffordablefuckImOuttaHere">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>Fuck this shit, I'm outta here !</i></p>
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+			<div id="column2" class="column" style="vertical-align: top;">
+				<div class="containerButtons">
+					<h3 id="Titre6">Main resources</h3>
+					<table>
+						<tr>
+							<td>Money: </td>
+							<td ><span id="money">0</span></td>
+							<td > / <span id="moneyCap">0</span></td>
+							<td class="number green" style="padding-left:20%"><span id="moneyRate">0</span>/s
+							<div class="TT1">
+								<div class="InfoBox">
+									<p style="text-align: center;" >Detail of money rate:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p> Base:</br></p>
+										<p><i>--> Upgrades: </i></br></p>
+										<p><i>--> Lobbyist: </i></br></p>
+										<p><i>--> Event: </i></br></p>
+										<p><i>--> Bonus: </i></br></p>
+										<p>Conso:</p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="moneyBase" class="green" style="text-align: center"> 0 </p>
+										<p id="moneyUpgradesRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="moneyLobbistRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="moneyEventRate" class="red" style="text-align: right"><i> 0 </i>%</p>
+										<p id="moneyBonusRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="moneyConso" class="red" style="text-align: center"> 0 </p>
+									</div>
+									<hr>
+									<p style="text-align: left;" >Time till cap:  <span id="moneyTimeTillCap">0</span></p>
+								</div>
+							</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>Science: </td>
+							<td ><span id="science">0</span></td>
+							<td > / <span id="scienceCap">0</span></td>
+							<td class="number green" style="padding-left:20%"><span id="scienceRate">0</span>/s	
+							<div class="TT1">
+								<div class="InfoBox">
+									<p style="text-align: center;" >Detail of science rate:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p> Base:</br></p>
+										<p><i>--> Upgrades: </i></br></p>
+										<p><i>--> Lobbyist: </i></br></p>
+										<p><i>--> Event: </i></br></p>
+										<p><i>--> Bonus: </i></br></p>
+										<p>Conso:</p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="scienceBase" class="green" style="text-align: center"> 0 </p>
+										<p id="scienceUpgradesRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="scienceLobbistRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="scienceEventRate" class="red" style="text-align: right"><i> 0 </i>%</p>
+										<p id="scienceBonusRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="scienceConso" class="red" style="text-align: center"> 0 </p>
+									</div> 
+									<hr>
+									<p style="text-align: left;" >Time till cap:  <span id="scienceTimeTillCap">0</span></p>
+								</div>
+							</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>Weapons: </td>
+							<td ><span id="weapons">0</span></td>
+							<td > / <span id="weaponsCap">0</span></td>
+							<td class="number green" style="padding-left:20%"><span id="weaponsRate">0</span>/s	
+							<div class="TT1">
+								<div class="InfoBox">
+									<p style="text-align: center;" >Detail of weapons rate:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p> Base:</br></p>
+										<p><i>--> Upgrades: </i></br></p>
+										<p><i>--> Lobbyist: </i></br></p>
+										<p><i>--> Event: </i></br></p>
+										<p><i>--> Bonus: </i></br></p>
+										<p>Conso:</p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="weaponsBase" class="green" style="text-align: center"> 0 </p>
+										<p id="weaponsUpgradesRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="weaponsLobbistRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="weaponsEventRate" class="red" style="text-align: right"><i> 0 </i>%</p>
+										<p id="weaponsBonusRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="weaponsConso" class="red" style="text-align: center"> 0 </p>
+									</div> 
+									<hr>
+									<p style="text-align: left;" >Time till cap:  <span id="weaponsTimeTillCap">0</span></p>
+								</div>
+							</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>Faith: </td>
+							<td ><span id="faith">0</span></td>
+							<td > / <span id="faithCap">0</span></td>
+							<td class="number green" style="padding-left:20%"><span id="faithRate">0</span>/s
+							<div class="TT1">
+								<div class="InfoBox">
+									<p style="text-align: center;" >Detail of faith rate:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p> Base:</br></p>
+										<p><i>--> Upgrades: </i></br></p>
+										<p><i>--> Lobbyist: </i></br></p>
+										<p><i>--> Event: </i></br></p>
+										<p><i>--> Bonus: </i></br></p>
+										<p>Conso:</p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="faithBase" class="green" style="text-align: center"> 0 </p>
+										<p id="faithUpgradesRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="faithLobbistRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="faithEventRate" class="red" style="text-align: right"><i> 0 </i>%</p>
+										<p id="faithBonusRate" class="green" style="text-align: right"><i> 0 </i>%</p>
+										<p id="faithConso" class="red" style="text-align: center"> 0 </p>
+									</div> 
+									<hr>
+									<p style="text-align: left;" >Time till cap:  <span id="faithTimeTillCap">0</span></p>
+								</div>
+							</div>
+							</td>
+						</tr>
+					</table>	
+				</div>
+				</br>
+				
+				<div class="containerButtons">
+					<h3 id="Titre3">Game parameters</h3>
+					<table>
+						<tr id="STEALTH" >
+							<td >Stealth: 
+							</td>
+							<td ><span id="stealth">0</span>
+							<div class="TT1">
+								<div class="InfoBox" style="margin-left:0px">
+									<p style="text-align: center;" >Stealth composition:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p>Population:</p>
+										<p><i>Stupidity:</i></p>
+										<p>Prophets:</p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="stealthPopulation" class="red" style="text-align: center">0 </p>
+										<p id="stealthUpgrades" class="green" style="text-align: right"><i>0</i></p>
+										<p id="stealthProphets" class="green" style="text-align: center">0</p>
+									</div> 
+								</div>
+							</div>
+							</td>
+							<td  id="stealthCap"> / 100</td>
+						</tr>
+						<tr id="FOLLOWERS">
+							<td >Followers: </td>
+							<td ><span id="followers">0</span></td>
+							<td > (<span id="followersRatio">0</span>%)</td>
+							<td class="number green" style="padding-left:20%"><span id="followersRate">0</span>/s
+							<div class="TT1" >
+								<div class="InfoBox">
+									<p style="text-align: center;" >Detail of followers rate:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p>Base gurus:</p>
+										<p>Base prophets:</p>
+										<p><i>Upgrades:</i></p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="followersRateGurus" class="green" style="text-align: center"> 0 </p>
+										<p id="followersRateProhpets" class="green" style="text-align: center">0</p>
+										<p id="followersRateUpgrades" class="green" style="text-align: right"><i>0</i></p>
+									</div> 
+								</div>
+							</div>
+							</td>
+						</tr>
+						<tr id="APPROVAL">
+							<td >Approval rate: </td>
+							<td ><span id="approvalRate">0</span>%
+							<div class="TT1" >
+								<div class="InfoBox" style="margin-left:0px">
+									<p style="text-align: center;" >Detail of approval:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p>Base politicians:</p>
+										<p><i>Stupidity:</i></p>
+										<p><i>Upgrades:</i></p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="approvalPoliticians" class="green" style="text-align: center"> 0 </p>
+										<p id="approvalStupidity" class="green" style="text-align: right"><i>0</i></p>
+										<p id="approvalUpgrades" class="green" style="text-align: right"><i>0</i></p>
+									</div> 
+								</div>
+							</div>
+							</td>
+						</tr>
+						<tr id="FIREPOWER">
+							<td>Firepower: </td>
+							<td ><span id="firepower">0</span>
+							<div class="TT1">
+								<div class="InfoBox" style="margin-left:0px">
+									<p style="text-align: center;" >Detail of firepower:</p>
+									<hr>
+									<div style="float:left; width:60%;">
+										<p>Base soldiers:</p>
+										<p><i>Upgrades:</i></p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="firepowerSoldiers" class="green" style="text-align: center"> 0 </p>
+										<p id="firepowerUpgrades" class="green" style="text-align: right"><i>0</i></p>
+									</div> 
+									<hr>
+									<div style="float:left; width:60%;">
+										<p>Planet soldiers:</p>
+										<p><i>Tech level:</i></p>
+									</div>
+									<div style="margin-left:60%;">
+										<p id="firepowerSoldiersPlanet" class="green" style="text-align: center"> 0 </p>
+										<p id="techLevelPlanet" class="green" style="text-align: right"><i>0</i></p>
+									</div> 
+								</div>
+							</div>
+							</td>
+							<td> </td>
+							<td class="number orange" style="padding-left:30%"><span id="planetFirepower">0</span></td>
+						</tr>
+						<tr id="STUPIDITY">
+							<td>Stupidity: </td>
+							<td ><span id="stupidity">0</span>%</td>
+						</tr>
+						<tr id="BONUSRATE">
+							<td>Bonus rate: </td>
+							<td ><span id="bonusRate">0</span>%
+							<div class="TT1">
+							<div class="InfoBox" style="margin-left:0px;">
+								<p style="text-align: center;" >Detail of bonus rate:</p>
+								<hr>
+								<div style="float:left; width:60%;">
+									<p>Pop. dead:</p>
+									<p>Conq. planets: </p>
+									<p>Total dead: </p>
+									<p>Galaxy updates: </p>
+									<p><i>War effect: </i></p>
+								</div>
+								<div style="margin-left:60%;">
+									<p id="bonusRatepopDead" class="green" style="text-align: center"> 0 </p>
+									<p id="bonusRateconqPlanet" class="green" style="text-align: center"> 0 </p>
+									<p id="bonusRatetotpopDead" class="green" style="text-align: center"> 0 </p>
+									<p id="bonusRategalaxyUpdates" class="green" style="text-align: center"> 0 </p>
+									<p id="bonusRatewarEffect" class="red" style="text-align: right"><i>0</i></p>
+								</div> 
+							</div>
+							</div>
+							</td>
+						</tr>
+						<tr id="EVENTRATE">
+							<td>Event rate: </td>
+							<td ><span id="eventRate">0</span>%
+							<div class="TT1">
+								<div class="InfoBox" style="margin-left:0px">
+									<p style="text-align: center; width:50px" >War rate</p>
+								</div>
+							</div>
+							</td>
+						</tr>
+					</table>
+				</div> </br>
+				
+				<div  class="containerButtons" id="logs">
+					<h3 id="Titre4">Population recap</h3>
+					<div id="Titre7"> <td> Total: </td> <td ><span id="totalPopulation">0</span></td> / <td ><span id="populationCap">0</span></td> </div></br></br>
+					<table>
+						<tr id="PLANET">
+							<td> </td>
+							<td > You </td>
+							<td class="number orange" style="padding-left:30%"> Planet </td>
+						</tr>
+						<tr id="THIEFS">
+							<td>Thiefs: </td>
+							<td ><span id="thiefs">0</span></td>
+						</tr>
+						<tr id="SCIENTISTS">
+							<td>Scientists: </td>
+							<td ><span id="scientists">0</span></td>
+							<td class="number orange" style="padding-left:30%"><span id="scientistPlanet">0</span></td>
+						</tr>
+						<tr id="SOLDIERS">
+							<td>Soldiers: </td>
+							<td ><span id="soldiers">0</span></td>
+							<td class="number orange" style="padding-left:30%"><span id="soldierPlanet">0</span></td>
+						</tr>
+						<tr id="POLITICIANS">
+							<td>Politicians: </td>
+							<td ><span id="politicians">0</span></td>
+							<td class="number orange" style="padding-left:30%"><span id="politicianPlanet">0</span></td>
+						</tr>
+						<tr id="GURUS">
+							<td>Gurus: </td>
+							<td ><span id="gurus">0</span></td>
+						</tr>
+						<tr id="LOBBISTS">
+							<td>Lobbists: </td>
+							<td ><span id="lobbists">0</span></td>
+						</tr>
+						<tr id="PROPHETS">
+							<td>Prophet: </td>
+							<td ><span id="prophets">0</span></td>
+						</tr>
+						<tr id="RECRUITERS">
+							<td>Recruiters: </td>
+							<td ><span id="recruitersFree">0</span> / <span id="recruiters">0</span></td>
+						</tr>
+					</table>
+				</div></br>
+				
+				<div class="containerButtons" id="RECRUITERBUTTONS">
+					<table id="B3">
+						<tr>
+							<td class="RecruitButtonDisabled" id="recruitScientistButton"> Recruit scientist (<span id="recruitScientistNumber" class="green">0) </td>
+							<td class="AddButton Plus" onclick="planets[0].recruitScientist(1);">[+]</td>
+							<td class="AddButton Less" onclick="planets[0].recruitScientist(-1);">[-]</td>
+							<td class="number green" style="padding-left:10%">(<span id="recruitScientistRate">0</span>%)</td>
+						</tr>
+						<tr>
+							<td class="RecruitButtonDisabled" id="recruitSoldierButton"> Recruit soldier (<span id="recruitSoldierNumber" class="green">0)</td>
+							<td class="AddButton Plus" onclick="planets[0].recruitSoldier(1);">[+]</td>
+							<td class="AddButton Less" onclick="planets[0].recruitSoldier(-1);">[-]</td>
+							<td class="number green" style="padding-left:10%">(<span id="recruitSoldierRate">0</span>%)</td>
+						</tr>
+						<tr>
+							<td class="RecruitButtonDisabled" id="recruitGuruButton"> Recruit guru (<span id="recruitGuruNumber" class="green">0)</td>
+							<td class="AddButton Plus" onclick="planets[0].recruitGuru(1);">[+]</td>
+							<td class="AddButton Less" onclick="planets[0].recruitGuru(-1);">[-]</td>
+							<td class="number green" style="padding-left:10%">(<span id="recruitGuruRate">0</span>%)</td>
+						</tr>
+						<tr>
+							<td class="RecruitButtonDisabled" id="recruitPoliticianButton"> Recruit politician (<span id="recruitPoliticianNumber" class="green">0)</td>
+							<td class="AddButton Plus" onclick="planets[0].recruitPolitician(1);">[+]</td>
+							<td class="AddButton Less" onclick="planets[0].recruitPolitician(-1);">[-]</td>
+							<td class="number green" style="padding-left:10%">(<span id="recruitPoliticianRate">0</span>%)</td>
+						</tr>
+					</table>
+				</div></br>
+				
+				
+			</div>
+			<div id="column3" class="column" style="vertical-align: top;">
+			
+				<div class="container">
+					Year: <span id="Time" style="color: rgb(0, 187, 0);">0</span><span style="padding-left:10%; font-size:12;"> <i>(1yr/10s)</i></span>		
+					<div class="containerActive" >
+						<img id="PauseImage" src="image/pause-green.png" class="img-active" onclick="Pause()">
+						<img id="PlayImage" src="image/play.png" class="img-active" onclick="Play()">
+					</div>
+				</div>
+				</br></br>
+				<div  id="B4" class="containerButtons" >
+					<h3 id="Titre5"> Strategic board </h3>
+					
+					<div class="TT ActionButton" id="MakePeace" onclick="planets[0].MakePeace();"> Make Peace
+						<div class="InfoBox">
+							<p style="text-align: center;" >Stop the war immediately</p>
+							<p style="text-align: center;" >Only works for democracy & theocracy</p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButton" id="DeclareWar" onclick="planets[0].DeclareWar();"> Declare War
+						<div class="InfoBox">
+							<p style="text-align: center;" >Conquer the planet</p>
+							<hr>
+							<p>After 5 years, soldiers will fight to the death</p>
+							<p>Firepower determines the issue of the fights</p>
+							<p>Civilian casualties may occur on both sides</p>
+							<hr>
+							<p class="green">Unlocks military victory</p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButton" id="OrganiseElections" onclick="planets[0].OrganiseElections();"> Organise Elections
+						<div class="InfoBox">
+							<p style="text-align: center;" >Rule the planet</p>
+							<hr>
+							<p>Consequences may vary between planet political systems</p>
+							<p>Population approval determines the results</p>
+							<hr>
+							<p class="green">Unlocks political victory</p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButton" id="RuleOfGod" onclick="planets[0].RuleOfGod();"> Rule of God
+						<div class="InfoBox">
+							<p style="text-align: center;" >Convert the planet</p>
+							<hr>
+							<p>Consequences may vary between planet political systems</p>
+							<p>Followers' rate determines the results</p>
+							<hr>
+							<p class="green">Unlocks religious victory</p>
+						</div>
+					</div>
+					
+					<div class="TT ActionButton" id="BuyShip" onclick="planets[0].BuyShip();"> Build spaceship
+						<div class="InfoBox">
+							<p style="text-align: center;" >(?) Discover a new planet (?)</p>
+							<hr>
+							<table class="white">
+								<tr>
+									<td> </td>
+									<td> Money </td>
+									<td> Science </td>
+									<td> Weapons </td>
+									<td> Faith </td>
+								</tr>
+								<tr>
+									<td>Cost </td>
+									<td id="shipmoneyCost" class="red" style="text-align: center"> 0 </td>
+									<td id="shipscienceCost" class="red" style="text-align: center"> 0 </td>
+									<td id="shipweaponsCost" class="red" style="text-align: center"> 0 </td>
+									<td id="shipfaithCost" class="red" style="text-align: center"> 0 </td>
+								</tr>
+							</table>
+							<hr>
+							Time till affordable: <span id="shiptimeTillAffordable">0</span>
+							<hr>
+							<p class="blue" style="text-align: right;"><i>To infinity and Beyond !</i></p>
+						</div>
+					</div>
+					
+				</div></br></br>
+							
+				<div id="Titre9" class="containerButtons" style="height:60%;">
+					<h3 >Events</h3>
+					<div id="sizeLog" style="text-align: right; font-size:12;"> <a class="AA" onclick="plusLog();"> + </a> / <a class="AA" onclick="minusLog();"> - </a> </div>
+					<div onclick="clearLog();" class="AA" style="text-align: right; font-size:12;"><i>Clear log</i></div></br>
+					<div id="logDiv" style="height:60%; 	overflow-y: auto;">
+						<table id="logTable">
+						</table>
+					</div>
+				</div>
+				
+
+			</div>
+			<div id="column4" class="column" style="vertical-align: top;">
+				<div class="containerImage" >
+					<a id="ReduceImagePlanet" class="closeButton white" onclick="reducePlanetImage()" style="right:10%; z-index:1000000;"><i style="font-size:10">Reduce</i></a>
+					<img id="PlanetImage" src="image/planet/a.jpg" class="img" >
+					<div id="PlanetDescription" class="caption shadow"> <b> Planet : <span id="planetName">planetName</span></b> 
+						</br></br>
+						<table class="tablePlanet shadow">
+							<tr>
+								<td>Population: </td>
+								<td ><span id="planetPopulation">0</span></td>
+							</tr>
+							<tr>
+								<td>Land area: </td>
+								<td ><span id="planetArea">0</span> km2 </td>
+							</tr>
+							<tr>
+								<td>GWP: </td>
+								<td ><span id="planetGWP">0</span>$ </td>
+							</tr>
+							<tr>
+								<td>Status: </td>
+								<td ><span id="planetStatus">0</span></td>
+							</tr>
+							<tr>
+								<td>Political system: </td>
+								<td ><span id="planetPoliticalSystem">0</span></td>
+							</tr>
+							<tr>
+								<td>Tech level: </td>
+								<td ><span id="techLevel">0</span></td>
+							</tr>
+							<tr>
+								<td>Climate: </td>
+								<td ><span id="planetClimate">0</span></td>
+							</tr>
+						</table> </br>
+					</div>
+				</div>
+				
+				<div class="containerButtons">
+					<h3 style="text-align:center;">Charts</h3>
+					<ul id="menu">
+						<li><span>Resources</span>
+							<ul>
+								<li><span id="moneyChartButton" onclick="changeChart(0);">Money</span></li> 
+								<li><span id="scienceChartButton" onclick="changeChart(1);">Science</span></li>
+								<li><span id="weaponsChartButton" onclick="changeChart(2);">Weapons</span></li>
+								<li><span id="faithChartButton" onclick="changeChart(3);">Faith</span></li>
+								<li><span id="allresourcesChartButton" onclick="changeChart(4);">All resources</span></li>
+							</ul>
+						</li>
+						<li><span id="allstatusChartButton" onclick="changeChart(5);">Parameters</span></li>
+						<li><span id="allpopChartButton" onclick="changeChart(6);">Population</span></li>
+						<li><span id="winChartButton" onclick="changeChart(7);">Win ratios</span></li>
+					</ul>
+				</div>
+				</br>
+				
+				<div class="containerImage" style="margin-right:2%; margin-left:2%;" id="Chart">
+					<canvas id="canvas" ></canvas>	
+				</div>
+
+			</div>
+		</div> 
+		
+
+			
+			<!-- Planet tab -->
+			
+			<div id="stratPagebackground" style="position: fixed; display:none; width: 100%; top: 31px; left:0; height: 100%;background-color: #fff;">
+				<h3><b>Strategic map of the galaxy</b></h3>
+				<div id="stratPagetotal">
+					<a id="ReduceTabPlanet" class="closeButton" onclick="reducePlanetTab()" style="right: 100px"><i style="font-size:10">Reduce</i></a>
+					<div id="myNode" class="column" style="width:60%; min-width:500px">
+						
+						<div id="DisclaimerPlanet0" class="planetDisclaimer">
+							<div id="Text0Planet0" class="PlanetTextVertical">
+								<span style="writing-mode:vertical-rl; "><b>EARTH</b></span>
+							</div>
+							<div id="Text1Planet0" class="PlanetText">
+								<table>
+									<tr><td>Population: </td><td ><span>0</span></td></tr>
+									<tr><td>Area: </td><td ><span>0</span> km2 </td></tr>
+									<tr><td>GWP: </td><td ><span>0</span>$ </td></tr>
+									<tr><td>Political system: </td><td ><span>0</span></td></tr>
+									<tr><td>Climate: </td><td ><span>0</span></td></tr>
+									<tr><td>Tech level: </td><td ><span>0</span></td></tr>
+								</table>
+							</div>
+							<div id="Text2Planet0" class="PlanetText">
+								<table>
+									<tr><td>Money cap: </td><td ><span>0</span>$</td></tr>
+									<tr><td>Science cap: </td><td ><span>0</span></td></tr>
+									<tr><td>Weapons cap: </td><td ><span>0</span></td></tr>
+									<tr><td>Faith cap: </td><td ><span>0</span></td></tr>
+									<tr><td>Soldiers: </td><td ><span>0</span></td></tr>
+									<tr><td>Politicians: </td><td ><span>0</span></td></tr>
+								</table>
+							</div>
+							<div id="ImagePlanet0" class="ImagePlanetGalaxy" style="background-image:url(image/presized.jpg);">
+							</div>
+						</div>
+
+						
+						
+					</div>
+					<div id="column6" class="column" style="padding-left:1.5%; width:37%; min-width:400px;">
+						</br>
+						<h3><b>Comparison tool</b></h3>
+						<span style="display: block; text-align: center; font-size:10;"><i> Right-click on the planet to compare</i></span></br>
+				
+						
+						<div class="containerImage" style="position: relative; margin-right:10%; margin-left:10%; height:80%; width:80%;" id="Chart">
+							<canvas id="canvasPlanets" ></canvas>	
+						</div>
+					</div>
+				</div>
+				<div id="stratPagetotal2" style="position: relative; display: block; left:4%; top: 67%; width: 92%; height: 21%; min-width: 1050px;">
+					
+					<div class="column" style="width:20%; min-width:150px; text-align: center;"> 
+						<h3><b>Total planets' population</b></h3>
+						<div class="containerButtons" style="display: inline-block; padding-right: 10%;" >
+						<table>
+							<tr>
+								<td>Soldiers: </td>
+								<td ><span id="totalSoldiers">0</span></td>
+							</tr>
+							<tr>
+								<td>Politicians: </td>
+								<td ><span id="totalPoliticians">0</span></td>
+							</tr>
+							<tr>
+								<td>Prophets: </td>
+								<td ><span id="totalProphets">0</span></td>
+							</tr>
+						</table>	
+						</div>		
+					</div>	
+					
+					<div class="column" style="width:25%; min-width:300px; text-align: center;"> 
+						<h3><b>Galaxy resources</b></h3>
+						<div class="containerButtons" style="display: inline-block; padding-right: 10%;" >
+						<table>
+							<tr>
+								<td>Ships: </td>
+								<td ><span id="ships">0</span></td>
+							</tr>
+							<tr>
+								<td>Energy: </td>
+								<td ><span id="energy">0</span></td>
+								<td > / <span id="energyCap">0</span></td>
+								<td class="number green" style="padding-left:20%"><span id="energyRate">0</span>/s</td>
+							</tr>
+							<tr>
+								<td>Unobtainium: </td>
+								<td ><span id="unobtainium">0</span></td>
+								<td > / <span id="unobtainiumCap">0</span></td>
+								<td class="number green" style="padding-left:20%"><span id="unobtainiumRate">0</span>/s</td>
+							</tr>
+							<tr>
+								<td>Cristals: </td>
+								<td ><span id="cristals">0</span></td>
+								<td > / <span id="cristalsCap">0</span></td>
+								<td class="number green" style="padding-left:20%"><span id="cristalsRate">0</span>/s</td>
+							</tr>
+						</table>	
+						</div>		
+					</div>
+					
+					<div class="column" style="width:25%; min-width:200px"> 
+						<h3><b>Space station</b></h3>
+						
+						<div class="TT ActionButtonDisabled" style="width:80%; left: 10%; display:none;" id="cargoShip" onclick="BuyGalaxyTechno('cargoShip');"> Cargo ship (<span id="cargoShipvalue">0</span>)
+							<div  id="percentagecargoShip" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Stores space resources</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostcargoShip" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostcargoShip" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostcargoShip" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostcargoShip" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="TT ActionButtonDisabled" style="width:80%; left: 10%; display:none;" id="solarPanel" onclick="BuyGalaxyTechno('solarPanel');"> Solar panels (<span id="solarPanelvalue">0</span>)
+							<div  id="percentagesolarPanel" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Produces energy in space</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostsolarPanel" class="red" style="text-align: center"> 0 </td>
+									</tr>
+									<tr>
+										<td>Effect (/s) </td>
+										<td id="shipsGainsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="energyGainsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumGainsolarPanel" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsGainsolarPanel" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					
+						<div class="TT ActionButtonDisabled"  style="width:80%; left: 10%; display:none;" id="miningVessel" onclick="BuyGalaxyTechno('miningVessel');"> Mining vessel (<span id="miningVesselvalue">0</span>)
+							<div  id="percentageminingVessel" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Harvest cristals on asteroïds</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostminingVessel" class="red" style="text-align: center"> 0 </td>
+									</tr>
+									<tr>
+										<td>Effect (/s) </td>
+										<td id="shipsGainminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="energyGainminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumGainminingVessel" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsGainminingVessel" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					
+						<div class="TT ActionButtonDisabled" style="width:80%; left: 10%; display:none;" id="terraformingBeam" onclick="BuyGalaxyTechno('terraformingBeam');"> Terraforming beam (<span id="terraformingBeamvalue">0</span>)
+							<div  id="percentageterraformingBeam" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Unexpectedly creates unobtainium</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostterraformingBeam" class="red" style="text-align: center"> 0 </td>
+									</tr>
+									<tr>
+										<td>Effect (/s) </td>
+										<td id="shipsGainterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="energyGainterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumGainterraformingBeam" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsGainterraformingBeam" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					
+					
+					</div>
+					<div class="column" style="width:25%; min-width:200px"> 
+						<h3><b>Galaxy Updates</b></h3>
+						
+						<div class="TT ActionButtonDisabled"  style="width:80%; left: 10%; display:none;" id="spaceX" onclick="BuyGalaxyTechno('spaceX');"> Space X <span id="spaceXvalue" style="display:none">0</span>
+							<div  id="percentagespaceX" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Ships cost two times less</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostspaceX" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostspaceX" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostspaceX" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostspaceX" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="TT ActionButtonDisabled"  style="width:80%; left: 10%; display:none;" id="propulsion" onclick="BuyGalaxyTechno('propulsion');"> Propulsion (<span id="propulsionvalue">0</span>)
+							<div  id="percentagepropulsion" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Increases the discovery chance by 10%</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostpropulsion" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostpropulsion" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostpropulsion" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostpropulsion" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="TT ActionButtonDisabled"  style="width:80%; left: 10%; display:none;" id="orbitalSupport" onclick="BuyGalaxyTechno('orbitalSupport');"> Orbital support (<span id="orbitalSupportvalue">0</span>)
+							<div  id="percentageorbitalSupport" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Increases planet resources cap by 20%</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostorbitalSupport" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostorbitalSupport" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostorbitalSupport" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostorbitalSupport" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="TT ActionButtonDisabled"  style="width:80%; left: 10%; display:none;" id="intergalacticTrade" onclick="BuyGalaxyTechno('intergalacticTrade');"> Intergalactic trade (<span id="intergalacticTradevalue">0</span>)
+							<div  id="percentageintergalacticTrade" class="percentage" style="width:50%;"></div>
+							<div class="InfoBox">
+								<p style="text-align: center;" >Increases planet resources rate by 20%</p>
+								<hr>
+								<table class="white">
+									<tr>
+										<td> </td>
+										<td> Ships </td>
+										<td> Energy </td>
+										<td> Unobt. </td>
+										<td> Cristals </td>
+									</tr>
+									<tr>
+										<td>Cost </td>
+										<td id="shipsCostintergalacticTrade" class="red" style="text-align: center"> 0 </td>
+										<td id="energyCostintergalacticTrade" class="red" style="text-align: center"> 0 </td>
+										<td id="unobtainiumCostintergalacticTrade" class="red" style="text-align: center"> 0 </td>
+										<td id="cristalsCostintergalacticTrade" class="red" style="text-align: center"> 0 </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+					</div>
+					
+				
+				</div>
+			</div>
+			
+			
+			<!-- Achievement tab -->
+			<div id="achievementPannel" style="display:none; position: fixed; width: 80%; height: 80%; background-color: #fff; border: 1px solid gray; top: 10%; left: 10%; border-radius: 10px;  box-shadow: 1px 1px 12px #555;">
+				<a class="closeButton" onclick="closeAchievementsWindow()">X</a>
+				<div  class ="column" style=" width: 40%; margin: 2%; height: 92%;"> 
+					<div style=" padding: 5%; text-align: center;"> <b>Statistics</b> 
+						
+						</br></br>
+						<h3 style="text-align: left" class="orange"> ALL-TIME STATISTICS </h3>
+						<table style="min-width: 300px; width: 50%; margin: auto; position: relative;">
+							<tr>
+								<td>Total number of clicks: </td>
+								<td ><span id="NUMCLICKS">0</span></td>
+							</tr>
+							<tr>
+								<td>All-time ships created: </td>
+								<td ><span id="SHIPS">0</span></td>
+							</tr>
+							<tr>
+								<td>Planets conquered: </td>
+								<td ><span id="PLANETSCONQUERED">0</span></td>
+							</tr>
+							<tr>
+								<td>Planets lost: </td>
+								<td ><span id="PLANETSLOST">0</span></td>
+							</tr>
+							<tr>
+								<td>Base bonus rate: </td>
+								<td ><span id="BONUSRATE2">0</span>%</td>
+							</tr>
+							<tr>
+								<td>Total number of people: </td>
+								<td ><span id="NUMPEOPLE">0</span></td>
+							</tr>
+							<tr>
+								<td>Total number of deaths: </td>
+								<td ><span id="NUMDEATHS">0</span></td>
+							</tr>
+							<tr>
+								<td>Time played: </td>
+								<td ><span id="TIMEPLAYED">0</span></td>
+							</tr>
+							<tr>
+								<td>Time really played: </td>
+								<td ><span id="TIMEREALLYPLAYED">0</span></td>
+							</tr>
+							
+							
+						</table> </br>
+						<h3 style="text-align: left" class="orange"> PLANET STATISTICS </h3>
+						<table style="min-width: 300px; width: 50%; margin: auto; position: relative;">
+							<tr>
+								<td>Time till discovery: </td>
+								<td ><span id="TIMEPLANET">0</span></td>
+							</tr>
+							<tr>
+								<td>Number of upgrades: </td>
+								<td ><span id="UPGRADESPLANET">0</span>/44</td>
+							</tr>
+							<tr>
+								<td>Total population: </td>
+								<td ><span id="POPULATIONPLANET">0</span></td>
+							</tr>
+							<tr>
+								<td>Total ships created: </td>
+								<td ><span id="SHIPSPLANET">0</span></td>
+							</tr>
+						</table> </br>
+						<h3 style="text-align: left" class="orange"> CIVILIZATION RANKING </h3>
+						<table style="min-width: 300px; width: 50%; margin: auto; position: relative;">
+							<tr>
+								<td>Name: </td>
+								<td ><span id="UserName">0</span></td>
+							</tr>
+							<tr>
+								<td>Civilization score: </td>
+								<td ><span id="CIVILIZATIONSCORE">0</span></td>
+							</tr>
+							<tr>
+								<td>Ranking: </td>
+								<td ><span id="UserRank">0</span> / <span id="NumberOfUsers">0</span></td>
+							</tr>
+							<tr>
+								<td>Number of active players: </td>
+								<td ><span id="NumberOfActiveUsers">0</span></td>
+							</tr>
+						</table> </br>	
+						<a id="ShowPlayers" onclick="ShowPlayers()" style="cursor: pointer;"><i style="font-size:10">Show top 10 active players</i></a> </br></br>
+						<table id="PlayersTable" style="display: none; min-width: 300px; width: 50%; margin: auto; position: relative;">
+							<tr>
+								<td class="orange"><b> Rank </b></td>
+								<td class="orange"><b> Name </b></td>
+								<td class="orange"><b> Score </b></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<div class ="column" style=" width: 50%; margin: 2%; height: 92%;">
+				<div style=" padding: 5%; text-align: center;"> <b>Achievements</b> </div>
+				<div class ="column" id="myNode2" style=" width: 100%; border-radius:10px; height: 83%; background-color: rgba(30,15,30,0.1);"></div>
+				
+				</div>
+			</div>
+			
+			<!-- Charts tab -->
+			<div id="chartsPannel" style="display:none; position: fixed; width: 90%; height: 90%; background-color: #fff; top: 7%; left: 5%; border-radius: 10px;  box-shadow: 1px 1px 12px #555;">
+				<a class="closeButton" onclick="closeChartsWindow()">X</a>
+				<h3> CHARTS </h3>
+				
+				<ul id="menu">
+					<li><span id="ChartHeader">Planet</span>
+						<ul id="ULPlanet">
+							<li><span id="planetButton0" onclick="printCharts(0)">Earth</span></li> 
+						</ul>
+					</li>	
+				</ul>
+				<div  class ="column" style="position: absolute; width: 100%; height: 88%;">  
+					<div class="chartPannel"><canvas id="canvas0" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas1" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas2" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas3" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas4" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas7" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas5" class="canvasPannel"></canvas></div>
+					<div class="chartPannel"><canvas id="canvas6" class="canvasPannel"></canvas></div>	
+				</div>
+			</div>
+			
+			<div id="impexp">
+				<a class="closeButton" onclick="impExp()">X</a>
+				<textarea id="impexpField"></textarea>
+				<button class="saveButton" style="float:left;" onclick="save('export')">Export</button>
+				<button class="saveButton" style="float:left;" onclick="document.getElementById('impexpField').select();">Select All</button>
+				<button class="saveButton" style="float:right;" onclick="load('import')">Import</button>
+			</div>
+			
+			<div id="initialPannel" style="position: fixed; width: 100%; height: 100%; left:0px;  background-color: #fff; top: 31px;"></div>
+			
+			
+			<script type="text/javascript" src="ClickConquer.js"></script>
+	</body>
+</html>
