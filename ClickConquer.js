@@ -1202,7 +1202,7 @@ function discoverPlanet(Name, Src, Scientists, Soldiers, Politicians, Population
 				this.resources[0].value = Math.min(this.resources[0].value + number*(1+this.techno.drugLab.effect)*(1+this.techno.armedRobbery.effect)*(1+this.techno.mortgageFund.effect), this.resources[0].cap);
 			};
 			for (var i=0; i<4; i++){
-				if (Math.random()<0.1) {
+				if (Math.random()<0.5) {
 					this.resources[i].value = prettifyOnly(Math.min(this.resources[i].value + number, this.resources[i].cap));
 				};
 			};
